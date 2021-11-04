@@ -14,10 +14,11 @@ const SpeechBubble = ( { dialogue, onRefresh, isLoading }: {
 
     return (
         <View style={styles.speechBubbleContainer}>
+            
             <View style={styles.speechBubbleArrow}></View>
             <View style={styles.speechBubble}>
                 <Text style={styles.speechBubbleText}>
-                    {dialogue}
+                    {getDialogue()}
                 </Text>
             </View>
         </View>

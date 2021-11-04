@@ -52,7 +52,7 @@ export const styles = StyleSheet.create({
 
     conditionText: {
         fontSize: 12,
-        marginTop: -18,
+        marginTop: -10,
         textAlign: "center"
     }
 
