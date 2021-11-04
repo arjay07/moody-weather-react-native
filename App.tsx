@@ -7,7 +7,7 @@ import MoodyWeather from './components/MoodyWeather';
 export default function App() {
   return (
     <View style={styles.container}>
-      <MoodyWeather/>
+      <MoodyWeather tempUnit="f" degradeMode={false}/>
       <StatusBar style="auto" />
     </View>
   );
