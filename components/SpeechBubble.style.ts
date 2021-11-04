@@ -22,7 +22,8 @@ export const styles = StyleSheet.create({
     },
 
     speechBubbleText: {
-        color: "#5d5d5d"
+        color: "#5d5d5d",
+        maxWidth: "80%"
     },
     
     speechBubbleArrow: {

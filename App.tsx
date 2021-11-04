@@ -1,13 +1,18 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Switch, SwitchChangeEvent, Text, View } from 'react-native';
+import { Image, Pressable, StyleSheet, Switch, SwitchChangeEvent, Text, View } from 'react-native';
 import MoodyWeather, { Position } from './components/MoodyWeather';
 import * as Location from "expo-location";
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import DialogContainer from 'react-native-dialog/lib/Container';
+import DialogButton from 'react-native-dialog/lib/Button';
 
 export default function App() {
 
   const [location, setLocation] = useState<Position | null>(null);
   const [degradeMode, setDegradeMode] = useState(false);
+  const [infoVisible, setInfoVisible] = useState(false);
 
   const askLocationPermission = async () => {
     try {
@@ -40,8 +45,19 @@ export default function App() {
     setDegradeMode(!degradeMode);
   };
 
+  const openInfoDialog = () => {
+    setInfoVisible(true);
+  };
+
+  const closeInfoDialog = () => {
+    setInfoVisible(false);
+  };
+
   return (
     <View style={styles.container}>
+      <Pressable style={styles.topLeft} onPress={openInfoDialog}>
+        <FontAwesomeIcon icon={faInfoCircle} color="#8f8f8f" size={20}/>
+      </Pressable>
       <View style={styles.topRight}>
         <Text style={styles.degradeModeText}>
           {
@@ -66,6 +82,31 @@ export default function App() {
         <MoodyWeather tempUnit="f" degradeMode={degradeMode} location={location}/>
         : null
       }
+      <DialogContainer visible={infoVisible}>
+        <View style={styles.dialogContent}>
+          <View style={styles.infoLogo}>
+            <Image source={require("./assets/favicon.png")} style={{
+              width: 128,
+              height: 128
+            }}/>
+          </View>
+          <Text style={{
+            textAlign: "center",
+            fontWeight: "700",
+            fontSize: 24,
+            marginBottom: 10
+          }}>
+            About Moody Weather
+          </Text>
+          <Text style={{
+            textAlign: "left",
+            fontSize: 14
+          }}>
+            The weather seems a little moody. Bad weather? Get insulted. Good weather? Get complimented. Make your bad days worse and your good days better.
+          </Text>
+        </View>
+        <DialogButton label="Ok" onPress={closeInfoDialog}></DialogButton>
+      </DialogContainer>
       <StatusBar style="auto" />
     </View>
   );
@@ -87,10 +128,17 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
 
+  topLeft: {
+    position: "absolute",
+    top: 40,
+    left: 15,
+    padding: 10
+  },
+
   bottomLeft: {
     position: "absolute",
     bottom: 5,
-    left: 5,
+    left: 15,
     textAlign: "left"
   },
 
@@ -104,5 +152,18 @@ const styles = StyleSheet.create({
     color: "#fd0e0e",
     fontWeight: "100",
     fontSize: 12
+  },
+
+  infoLogo: {
+    width: 128,
+    height: 128,
+    margin: "auto"
+  },
+
+  dialogContent: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column"
   }
 });
