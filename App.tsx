@@ -2,11 +2,12 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { API_URL } from '@env';
+import MoodyWeather from './components/MoodyWeather';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>This is the API URL I'm using: {API_URL}</Text>
+      <MoodyWeather/>
       <StatusBar style="auto" />
     </View>
   );
