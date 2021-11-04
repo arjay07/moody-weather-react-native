@@ -4,6 +4,7 @@ import { Image, Text, View } from "react-native";
 import { API_URL } from "@env";
 import axios from "axios";
 import { styles } from "./MoodyWeather.style";
+import SpeechBubble from "./SpeechBubble";
 
 type Position = {
     latitude: number,
@@ -95,31 +96,34 @@ const MoodyWeather = ({tempUnit, degradeMode}: {tempUnit: 'f' | 'c', degradeMode
     }, []);
 
     return (
-        <View style={styles.weatherCard}>
-            <View style={styles.conditionSummary}>
-                <Text style={styles.conditionTemp}>
-                    {
-                        tempUnit === "f" ?
-                            moodyWeather?.weather.current.temp_f :
-                            moodyWeather?.weather.current.temp_c
-                    }&deg;
-                </Text>
-                <View style={styles.conditionIconContainer}>
-                    <Image style={styles.conditionIcon} source={{uri: `http:${moodyWeather?.weather.current.condition.icon}`}}/>
-                    <Text style={styles.conditionText}>
-                        {moodyWeather?.weather.current.condition.text}
+        <>
+            <View style={styles.weatherCard}>
+                <View style={styles.conditionSummary}>
+                    <Text style={styles.conditionTemp}>
+                        {
+                            tempUnit === "f" ?
+                                moodyWeather?.weather.current.temp_f :
+                                moodyWeather?.weather.current.temp_c
+                        }&deg;
+                    </Text>
+                    <View style={styles.conditionIconContainer}>
+                        <Image style={styles.conditionIcon} source={{uri: `http:${moodyWeather?.weather.current.condition.icon}`}}/>
+                        <Text style={styles.conditionText}>
+                            {moodyWeather?.weather.current.condition.text}
+                        </Text>
+                    </View>
+                </View>
+                <View>
+                    <Text style={styles.locationName}>
+                        {moodyWeather?.weather.location.name}
+                    </Text>
+                    <Text style={styles.locationSub}>
+                        {moodyWeather?.weather.location.region}, {moodyWeather?.weather.location.country}
                     </Text>
                 </View>
             </View>
-            <View>
-                <Text style={styles.locationName}>
-                    {moodyWeather?.weather.location.name}
-                </Text>
-                <Text style={styles.locationSub}>
-                    {moodyWeather?.weather.location.region}, {moodyWeather?.weather.location.country}
-                </Text>
-            </View>
-        </View>
+            <SpeechBubble dialogue={moodyWeather?.dialogue.text} isLoading={loading}></SpeechBubble>
+        </>
     );
     
 };
