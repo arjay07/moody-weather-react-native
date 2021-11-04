@@ -56,6 +56,11 @@ export default function App() {
                   false: "#9f9f9f"
                 }}/>
       </View>
+      <View style={styles.bottomLeft}>
+        <Text style={styles.copyrightText}>
+          &copy; Moody Weather 2021
+        </Text>
+      </View>
       { 
         location ? 
         <MoodyWeather tempUnit="f" degradeMode={degradeMode} location={location}/>
@@ -81,6 +86,20 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center"
   },
+
+  bottomLeft: {
+    position: "absolute",
+    bottom: 5,
+    left: 5,
+    textAlign: "left"
+  },
+
+  copyrightText: {
+    color: "#8f8f8f",
+    fontWeight: "100",
+    fontSize: 10
+  },
+
   degradeModeText: {
     color: "#fd0e0e",
     fontWeight: "100",
