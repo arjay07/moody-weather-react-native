@@ -85,7 +85,7 @@ export default function App() {
       <DialogContainer visible={infoVisible}>
         <View style={styles.dialogContent}>
           <View style={styles.infoLogo}>
-            <Image source={require("./assets/favicon.png")} style={{
+            <Image source={require("./assets/adaptive-icon.png")} style={{
               width: 128,
               height: 128
             }}/>
