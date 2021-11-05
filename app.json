@@ -17,8 +17,7 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.moodyweather.app"
+      "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
