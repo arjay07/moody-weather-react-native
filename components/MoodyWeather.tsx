@@ -42,7 +42,7 @@ const MoodyWeather = ({tempUnit, degradeMode, location}: {tempUnit: 'f' | 'c', d
     const [loading, setLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState<string>("");
     const [moodyWeather, setMoodyWeather] = useState<MoodyWeatherModel | undefined | null>();
-    const [dialogue, setDialogue] = useState<{isInsult: boolean, text: string} | null>(null);
+    const [dialogue, setDialogue] = useState<{isInsult: boolean, text: string} | null | undefined>(null);
 
     useEffect(() => {
         setLoading(true);
@@ -57,8 +57,10 @@ const MoodyWeather = ({tempUnit, degradeMode, location}: {tempUnit: 'f' | 'c', d
                 const weatherResponse = await axios.get(`${API_URL}/moody-weather`, {
                     params: { q, degrading: degradeMode }
                 });
-                setMoodyWeather(weatherResponse.data);
-                setDialogue(moodyWeather?.dialogue!);
+                console.log("Setting weather...");
+                const moodyWeatherData: MoodyWeatherModel = weatherResponse.data;
+                setMoodyWeather(moodyWeatherData);
+                setDialogue(moodyWeatherData.dialogue);
 
             } catch (e: any) {
                 setErrorMsg(`Unable to retrieve weather: ${e.message}`)
@@ -110,7 +112,11 @@ const MoodyWeather = ({tempUnit, degradeMode, location}: {tempUnit: 'f' | 'c', d
                             </Text>
                         </View>
                     </View>
-                    <SpeechBubble dialogue={dialogue?.text} isLoading={loading} onRefresh={refreshDialogue}/>
+                    {
+                        dialogue ?
+                        <SpeechBubble dialogue={dialogue.text} isLoading={loading} onRefresh={refreshDialogue}/>
+                        : null
+                    }
                 </>
             }
         </View>
